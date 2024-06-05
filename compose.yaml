@@ -5,12 +5,20 @@ services:
       context: ./webserver
       target: development
     container_name: "web_market"
+    command: ["npm", "run", "dev"]
+    working_dir: /usr/src/app
     tty: true
     volumes:
       - ./webserver/app:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - 80:80
+      - 3000:3000
+  kafka:
+    build:
+      "./dataanalysis/kafka"
+    container_name: "kafka_market"
+    tty: true
+
   # db:
   #   image: mysql:8.0.37-oracle
   #   container_name: "db_callcenter"
