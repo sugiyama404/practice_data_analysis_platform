@@ -18,6 +18,13 @@ services:
       "./dataanalysis/kafka"
     container_name: "kafka_market"
     tty: true
+  spark:
+    build:
+      "./dataanalysis/spark"
+    container_name: "spark_market"
+    tty: true
+    ports:
+      - 65432:65432
 
   # db:
   #   image: mysql:8.0.37-oracle
