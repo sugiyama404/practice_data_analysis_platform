@@ -8,7 +8,6 @@ ENV KAFKA_VERSION=3.0.2 \
     SCALA_VERSION=2.13
 ENV KAFKA_HOME=/opt/kafka
 
-
 # 必要なツールと依存関係をインストール
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -17,15 +16,29 @@ RUN apt-get update && \
     python3 \
     python3-pip \
     mariadb-server \
+    unzip \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Embulkをインストール
+RUN curl -o /tmp/embulk.jar -L "https://dl.embulk.org/embulk-latest.jar" && \
+    chmod +x /tmp/embulk.jar && \
+    mv /tmp/embulk.jar /usr/local/bin/embulk && \
+    ln -s /usr/local/bin/embulk /usr/bin/embulk
+
+# Embulkプラグインをインストール
+RUN embulk gem install \
+    jruby-openssl -v 0.10.4 \
+    embulk-input-postgresql \
+    embulk-output-postgresql \
+    mbulk-output-parquet
 
 # Digdagをインストール
 RUN curl -o /usr/local/bin/digdag --create-dirs -L "https://dl.digdag.io/digdag-latest" && \
     chmod +x /usr/local/bin/digdag
 
 # PySparkをインストール
-RUN pip3 install pyspark==$PYSPARK_VERSION
+RUN pip3 install --no-cache-dir pyspark==$PYSPARK_VERSION
 
 # Sparkをダウンロードして配置
 RUN curl -o /tmp/spark.tgz -L "https://archive.apache.org/dist/spark/spark-${PYSPARK_VERSION}/spark-${PYSPARK_VERSION}-bin-hadoop3.2.tgz" && \
@@ -48,3 +61,7 @@ ENV TZ JST-9
 
 # 作業ディレクトリを設定
 WORKDIR /home/pyspark
+
+CMD ["digdag", "server", "--config", "/root/etc/digdag.properties", \
+    "--bind", "0.0.0.0", "--port", "65432", "--task-log",  \
+    "/var/log/digdag/", "--access-log", "/var/log/digdag/"]
