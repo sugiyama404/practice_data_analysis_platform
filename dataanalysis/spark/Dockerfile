@@ -34,13 +34,6 @@ RUN mkdir -p /root/.embulk/lib/gems && \
     echo 'gem_path: ""' >> /root/.embulk/embulk.properties && \
     echo 'm2_repo: /root/.embulk/lib/m2/repository' >> /root/.embulk/embulk.properties
 
-# Javaコマンドラインを使ってEmbulkプラグインをインストール
-RUN java -Dembulk.home=/root/.embulk -jar /usr/local/bin/embulk gem install \
-    jruby-openssl -v 0.10.4 \
-    embulk-input-postgresql embulk-output-postgresql \
-    embulk-input-mysql embulk-output-mysql \
-    embulk-output-parquet
-
 # Digdagをインストール
 RUN curl -o /usr/local/bin/digdag --create-dirs -L "https://dl.digdag.io/digdag-${DIGTAG_VERSION}" && \
     chmod +x /usr/local/bin/digdag
@@ -66,6 +59,12 @@ RUN curl -o /tmp/kafka.tgz -L "https://archive.apache.org/dist/kafka/${KAFKA_VER
 # 必要な環境変数を設定
 ENV PATH $PATH:/usr/local/bin:$SPARK_HOME/bin:$KAFKA_HOME/bin
 ENV PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH
+
+# Embulkプラグインをインストール
+RUN embulk gem install jruby-openssl -v 0.10.4 \
+    embulk-input-postgresql embulk-output-postgresql \
+    embulk-input-mysql embulk-output-mysql \
+    embulk-output-parquet
 
 # TimeZone (Asia/Tokyo)の設定
 ENV TZ JST-9

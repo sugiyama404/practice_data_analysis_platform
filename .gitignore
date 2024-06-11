@@ -69,5 +69,6 @@ yarn-error.log*
 next-env.d.ts
 
 memo.txt
+dataanalysis/strage/
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,nextjs

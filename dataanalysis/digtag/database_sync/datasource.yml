@@ -7,7 +7,6 @@ in:
   query: |
     select product_id,user_id
     from orders
-    where product_id in (1, 10)
 out:
   type: parquet
   path_prefix: /tmp/share_file/datalake/orders/orders
