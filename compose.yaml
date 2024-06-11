@@ -22,6 +22,9 @@ services:
     build:
       "./dataanalysis/spark"
     container_name: "spark_market"
+    volumes:
+      - ./dataanalysis/strage:/tmp/share_file
+      - ./dbserver/initdb.d:/docker-entrypoint-initdb.d
     tty: true
     ports:
       - 65432:65432
