@@ -1,4 +1,4 @@
-FROM openjdk:23-ea-25-jdk-slim-bullseye
+FROM openjdk:8
 
 # 環境変数を設定
 ENV DEBIAN_FRONTEND=noninteractive
@@ -6,6 +6,7 @@ ENV EMBULK_VERSION=0.9.25
 ENV DIGTAG_VERSION=0.10.4
 ENV PYSPARK_VERSION=3.2.4
 ENV SPARK_HOME=/opt/spark
+ENV DIGTAG_HOME=/opt/digdag
 ENV KAFKA_VERSION=3.0.2 \
     SCALA_VERSION=2.13
 ENV KAFKA_HOME=/opt/kafka
@@ -36,15 +37,16 @@ RUN mkdir -p /root/.embulk/lib/gems && \
 # Javaコマンドラインを使ってEmbulkプラグインをインストール
 RUN java -Dembulk.home=/root/.embulk -jar /usr/local/bin/embulk gem install \
     jruby-openssl -v 0.10.4 \
-    embulk-input-postgresql \
-    embulk-output-postgresql \
+    embulk-input-postgresql embulk-output-postgresql \
+    embulk-input-mysql embulk-output-mysql \
     embulk-output-parquet
 
 # Digdagをインストール
 RUN curl -o /usr/local/bin/digdag --create-dirs -L "https://dl.digdag.io/digdag-${DIGTAG_VERSION}" && \
     chmod +x /usr/local/bin/digdag
 
-COPY ./server.properties /opt/digdag
+RUN mkdir -p ${DIGTAG_HOME}
+COPY server.properties ${DIGTAG_HOME}/
 
 # PySparkをインストール
 RUN pip3 install --no-cache-dir pyspark==$PYSPARK_VERSION
@@ -62,7 +64,7 @@ RUN curl -o /tmp/kafka.tgz -L "https://archive.apache.org/dist/kafka/${KAFKA_VER
     rm /tmp/kafka.tgz
 
 # 必要な環境変数を設定
-ENV PATH $PATH:/usr/local/bin:$SPARK_HOME/bin:$KAFKA_HOME/bin:$HOME/bin
+ENV PATH $PATH:/usr/local/bin:$SPARK_HOME/bin:$KAFKA_HOME/bin
 ENV PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH
 
 # TimeZone (Asia/Tokyo)の設定
@@ -72,5 +74,3 @@ ENV TZ JST-9
 WORKDIR /home/pyspark
 
 EXPOSE 65432
-
-ENTRYPOINT ["digdag", "server", "--config", "/opt/digdag/server.properties", "--bind", "0.0.0.0", "--port", "65432", "--task-log", "/var/log/digdag/", "--access-log", "/var/log/digdag/"]

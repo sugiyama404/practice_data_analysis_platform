@@ -1,27 +1,28 @@
 services:
-  web:
-    restart: always
-    build:
-      context: ./webserver
-      target: development
-    container_name: "web_market"
-    command: ["npm", "run", "dev"]
-    working_dir: /usr/src/app
-    tty: true
-    volumes:
-      - ./webserver/app:/usr/src/app
-      - /usr/src/app/node_modules
-    ports:
-      - 3000:3000
-  kafka:
-    build:
-      "./dataanalysis/kafka"
-    container_name: "kafka_market"
-    tty: true
+  # web:
+  #   restart: always
+  #   build:
+  #     context: ./webserver
+  #     target: development
+  #   container_name: "web_market"
+  #   command: ["npm", "run", "dev"]
+  #   working_dir: /usr/src/app
+  #   tty: true
+  #   volumes:
+  #     - ./webserver/app:/usr/src/app
+  #     - /usr/src/app/node_modules
+  #   ports:
+  #     - 3000:3000
+  # kafka:
+  #   build:
+  #     "./dataanalysis/kafka"
+  #   container_name: "kafka_market"
+  #   tty: true
   spark:
     build:
       "./dataanalysis/spark"
     container_name: "spark_market"
+    command: sh -c "sleep 10 && digdag server --config /opt/digdag/server.properties"
     volumes:
       - ./dataanalysis/strage:/tmp/share_file
       - ./dataanalysis/spark/log:/var/log/digdag
@@ -72,22 +73,12 @@ services:
     cap_add:
       - SYS_NICE
   digtag_db:
-    image: mysql:8.0.37-oracle
+    image: postgres:16-bookworm
     container_name: "db_digtag_market"
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: marketproject
-      MYSQL_USER: pythonMySql1
-      MYSQL_PASSWORD: pythonMySql1
-      MYSQL_TCP_PORT: 3308
-      TZ: 'Asia/Tokyo'
-    command: mysqld
-    volumes:
-      - ./dbserver/common/conf/my.cnf:/etc/mysql/conf.d/my.cnf
+      POSTGRES_DB: marketproject
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
-      - 3308:3308
-    expose:
-      - 3308
-    cap_add:
-      - SYS_NICE
+      - 5432:5432

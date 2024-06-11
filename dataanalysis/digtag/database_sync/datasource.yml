@@ -2,7 +2,7 @@ in:
   type: mysql
   host: before_db
   user: pythonMySql1
-  password: "pythonMySql1"
+  password: pythonMySql1
   database: marketproject
   query: |
     select product_id,user_id
