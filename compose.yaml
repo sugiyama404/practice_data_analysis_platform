@@ -24,7 +24,7 @@ services:
     container_name: "spark_market"
     volumes:
       - ./dataanalysis/strage:/tmp/share_file
-      - ./dbserver/initdb.d:/docker-entrypoint-initdb.d
+      - ./dataanalysis/spark/log:/var/log/digdag
     tty: true
     ports:
       - 65432:65432
@@ -45,7 +45,8 @@ services:
       TZ: 'Asia/Tokyo'
     command: mysqld
     volumes:
-       - ./dbserver/common/conf/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./dbserver/common/conf/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./dbserver/initdb.d:/docker-entrypoint-initdb.d
     ports:
       - 3306:3306
     cap_add:
@@ -56,14 +57,37 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: callcenterproject
+      MYSQL_DATABASE: marketproject
       MYSQL_USER: pythonMySql1
       MYSQL_PASSWORD: pythonMySql1
+      MYSQL_TCP_PORT: 3307
       TZ: 'Asia/Tokyo'
     command: mysqld
     volumes:
-       - ./dbserver/common/conf/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./dbserver/common/conf/my.cnf:/etc/mysql/conf.d/my.cnf
     ports:
-      - 3307:3306
+      - 3307:3307
+    expose:
+      - 3307
+    cap_add:
+      - SYS_NICE
+  digtag_db:
+    image: mysql:8.0.37-oracle
+    container_name: "db_digtag_market"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: marketproject
+      MYSQL_USER: pythonMySql1
+      MYSQL_PASSWORD: pythonMySql1
+      MYSQL_TCP_PORT: 3308
+      TZ: 'Asia/Tokyo'
+    command: mysqld
+    volumes:
+      - ./dbserver/common/conf/my.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+      - 3308:3308
+    expose:
+      - 3308
     cap_add:
       - SYS_NICE

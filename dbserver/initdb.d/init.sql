@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS orders;
 
-CREATE TABLE orders IF (
+CREATE TABLE orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NULL,
     product_id INT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE orders IF (
     total INT NULL,
     discount INT DEFAULT 0.00,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    quality INT NULL,
+    quality INT NULL
 );
 
 INSERT INTO orders (user_id, product_id, subtotal, tax, total, discount, quality) VALUES

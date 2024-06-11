@@ -20,8 +20,8 @@ out:
   type: mysql
   mode: truncate_insert
   default_timezone: "Asia/Tokyo"
-  host: before_db
-  port: 3306
+  host: after_db
+  port: 3307
   user: pythonMySql1
   password: "pythonMySql1"
   database: marketproject
