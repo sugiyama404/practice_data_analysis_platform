@@ -67,7 +67,8 @@ RUN embulk gem install JRuby-OpenSSL \
     embulk-output-parquet
 
 # spark session用のディレクトリ
-RUN mkdir /tmp/spark-events
+RUN mkdir /tmp/spark-events \
+    chmod 777 /tmp/spark-events
 
 # TimeZone (Asia/Tokyo)の設定
 ENV TZ JST-9
@@ -75,9 +76,6 @@ ENV TZ JST-9
 # 作業ディレクトリを設定
 WORKDIR /home/pyspark
 
-COPY streaming.py ./
-
-COPY docker-entrypoint.sh /app/docker-entrypoint.sh
-RUN chmod +x /app/docker-entrypoint.sh
+COPY streaming.py docker-entrypoint.sh ./
 
 EXPOSE 65432
