@@ -17,6 +17,7 @@ services:
     build:
       "./dataanalysis/kafka"
     container_name: "kafka_market"
+    restart: always
     tty: true
     ports:
       - 9092:9092
@@ -24,7 +25,7 @@ services:
     build:
       "./dataanalysis/spark"
     container_name: "spark_market"
-    entrypoint: ["/app/docker-entrypoint.sh"]
+    entrypoint: ["/home/pyspark/docker-entrypoint.sh"]
     volumes:
       - ./dataanalysis/strage:/tmp/share_file
       - ./dataanalysis/spark/log:/var/log/digdag

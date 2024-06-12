@@ -4,7 +4,7 @@ schedule:
   daily>: 07:00:00
 
 _export:
-  workflow_name: "postgres2parquet"
+  workflow_name: "mysqlsync"
   start_msg:     "digdag ${workflow_name} start"
   end_msg:       "digdag ${workflow_name} finish"
   error_msg:     "digdag ${workflow_name} error"
@@ -12,13 +12,14 @@ _export:
 +strat:
   echo>: ${start_msg}
 
-# extractは今回なし
++extract:
+  embulk>: ./db_config.yml
 
 +transform:
-  sh>: spark-submit transform2.py
+  sh>: spark-submit dbanalyzer.py
 
 +load:
-  embulk>: ./load2.yml
+  embulk>: ./db_load.yml
 
 +end:
   echo>: ${end_msg}
