@@ -2,7 +2,7 @@ const { Kafka } = require('kafkajs')
 
 const kafka = new Kafka({
     clientId: 'my-app',
-    brokers: ['kafka_big:9092']
+    brokers: ['kafka:9092']
 })
 const express = require('express');
 const app = express();

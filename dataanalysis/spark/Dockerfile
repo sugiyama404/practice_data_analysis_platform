@@ -20,6 +20,7 @@ RUN apt-get update && \
     python3-pip \
     mariadb-server \
     unzip \
+    vim \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -61,15 +62,22 @@ ENV PATH $PATH:/usr/local/bin:$SPARK_HOME/bin:$KAFKA_HOME/bin
 ENV PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH
 
 # Embulkプラグインをインストール
-RUN embulk gem install jruby-openssl -v 0.10.4 \
-    embulk-input-postgresql embulk-output-postgresql \
+RUN embulk gem install JRuby-OpenSSL \
     embulk-input-mysql embulk-output-mysql \
     embulk-output-parquet
+
+# spark session用のディレクトリ
+RUN mkdir /tmp/spark-events
 
 # TimeZone (Asia/Tokyo)の設定
 ENV TZ JST-9
 
 # 作業ディレクトリを設定
 WORKDIR /home/pyspark
+
+COPY streaming.py ./
+
+COPY docker-entrypoint.sh /app/docker-entrypoint.sh
+RUN chmod +x /app/docker-entrypoint.sh
 
 EXPOSE 65432

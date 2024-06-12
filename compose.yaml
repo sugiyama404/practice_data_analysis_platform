@@ -1,28 +1,30 @@
 services:
-  # web:
-  #   restart: always
-  #   build:
-  #     context: ./webserver
-  #     target: development
-  #   container_name: "web_market"
-  #   command: ["npm", "run", "dev"]
-  #   working_dir: /usr/src/app
-  #   tty: true
-  #   volumes:
-  #     - ./webserver/app:/usr/src/app
-  #     - /usr/src/app/node_modules
-  #   ports:
-  #     - 3000:3000
-  # kafka:
-  #   build:
-  #     "./dataanalysis/kafka"
-  #   container_name: "kafka_market"
-  #   tty: true
+  web:
+    restart: always
+    build:
+      context: ./webserver
+      target: development
+    container_name: "web_market"
+    command: ["npm", "run", "dev"]
+    working_dir: /usr/src/app
+    tty: true
+    volumes:
+      - ./webserver/app:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+  kafka:
+    build:
+      "./dataanalysis/kafka"
+    container_name: "kafka_market"
+    tty: true
+    ports:
+      - 9092:9092
   spark:
     build:
       "./dataanalysis/spark"
     container_name: "spark_market"
-    command: sh -c "sleep 10 && digdag server --config /opt/digdag/server.properties"
+    entrypoint: ["/app/docker-entrypoint.sh"]
     volumes:
       - ./dataanalysis/strage:/tmp/share_file
       - ./dataanalysis/spark/log:/var/log/digdag
