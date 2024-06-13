@@ -7,36 +7,39 @@ services:
     container_name: "web_market"
     command: ["npm", "run", "dev"]
     working_dir: /usr/src/app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - data_streaming_server=kafka:9092
     tty: true
     volumes:
       - ./webserver/app:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - 3000:3000
-  kafka:
-    build:
-      "./dataanalysis/kafka"
-    container_name: "kafka_market"
-    restart: always
-    tty: true
-    ports:
-      - 9092:9092
-  spark:
-    build:
-      "./dataanalysis/spark"
-    container_name: "spark_market"
-    entrypoint: ["/home/pyspark/docker-entrypoint.sh"]
-    volumes:
-      - ./dataanalysis/strage:/tmp/share_file
-      - ./dataanalysis/spark/log:/var/log/digdag
-    tty: true
-    ports:
-      - 65432:65432
-  metabase:
-    image: metabase/metabase:v0.42.3
-    ports:
-      - 3001:3000
-    container_name: metabase_market
+  # kafka:
+  #   build:
+  #     "./dataanalysis/kafka"
+  #   container_name: "kafka_market"
+  #   restart: always
+  #   tty: true
+  #   ports:
+  #     - 9092:9092
+  # spark:
+  #   build:
+  #     "./dataanalysis/spark"
+  #   container_name: "spark_market"
+  #   entrypoint: ["/home/pyspark/docker-entrypoint.sh"]
+  #   volumes:
+  #     - ./dataanalysis/strage:/tmp/share_file
+  #     - ./dataanalysis/spark/log:/var/log/digdag
+  #   tty: true
+  #   ports:
+  #     - 65432:65432
+  # metabase:
+  #   image: metabase/metabase:v0.42.3
+  #   ports:
+  #     - 3001:3000
+  #   container_name: metabase_market
   before_db:
     image: mysql:8.0.37-oracle
     container_name: "db_before_market"
@@ -55,33 +58,33 @@ services:
       - 3306:3306
     cap_add:
       - SYS_NICE
-  after_db:
-    image: mysql:8.0.37-oracle
-    container_name: "db_after_market"
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: marketproject
-      MYSQL_USER: pythonMySql1
-      MYSQL_PASSWORD: pythonMySql1
-      MYSQL_TCP_PORT: 3307
-      TZ: 'Asia/Tokyo'
-    command: mysqld
-    volumes:
-      - ./dbserver/common/conf/my.cnf:/etc/mysql/conf.d/my.cnf
-    ports:
-      - 3307:3307
-    expose:
-      - 3307
-    cap_add:
-      - SYS_NICE
-  digtag_db:
-    image: postgres:16-bookworm
-    container_name: "db_digtag_market"
-    restart: always
-    environment:
-      POSTGRES_DB: marketproject
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - 5432:5432
+  # after_db:
+  #   image: mysql:8.0.37-oracle
+  #   container_name: "db_after_market"
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_DATABASE: marketproject
+  #     MYSQL_USER: pythonMySql1
+  #     MYSQL_PASSWORD: pythonMySql1
+  #     MYSQL_TCP_PORT: 3307
+  #     TZ: 'Asia/Tokyo'
+  #   command: mysqld
+  #   volumes:
+  #     - ./dbserver/common/conf/my.cnf:/etc/mysql/conf.d/my.cnf
+  #   ports:
+  #     - 3307:3307
+  #   expose:
+  #     - 3307
+  #   cap_add:
+  #     - SYS_NICE
+  # digtag_db:
+  #   image: postgres:16-bookworm
+  #   container_name: "db_digtag_market"
+  #   restart: always
+  #   environment:
+  #     POSTGRES_DB: marketproject
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: postgres
+  #   ports:
+  #     - 5432:5432
