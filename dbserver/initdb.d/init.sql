@@ -1,35 +1,67 @@
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS items;
 DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS order_items;
 
-CREATE TABLE orders (
+-- ユーザーテーブル
+CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NULL,
-    product_id INT NULL,
-    subtotal INT NULL,
-    tax INT NULL,
-    total INT NULL,
-    discount INT DEFAULT 0.00,
+    username VARCHAR(50) DEFAULT NULL,
+    email VARCHAR(100) DEFAULT NULL,
+    password VARCHAR(255) DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    quality INT NULL
+    UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-INSERT INTO orders (user_id, product_id, subtotal, tax, total, discount, quality) VALUES
-(1, 101, 1000, 80, 1080, 0.00, 5),
-(2, 102, 1500, 120, 1620, 0.00, 4),
-(3, 103, 2000, 160, 2160, 50.00, 3),
-(4, 104, 2500, 200, 2700, 100.00, 5),
-(5, 105, 3000, 240, 3240, 0.00, 2),
-(6, 106, 3500, 280, 3780, 20.00, 4),
-(7, 107, 4000, 320, 4320, 0.00, 5),
-(8, 108, 4500, 360, 4860, 30.00, 3),
-(9, 109, 5000, 400, 5400, 0.00, 4),
-(10, 110, 5500, 440, 5940, 0.00, 5),
-(11, 111, 6000, 480, 6480, 60.00, 2),
-(12, 112, 6500, 520, 7020, 0.00, 3),
-(13, 113, 7000, 560, 7560, 70.00, 4),
-(14, 114, 7500, 600, 8100, 0.00, 5),
-(15, 115, 8000, 640, 8640, 80.00, 2),
-(16, 116, 8500, 680, 9180, 0.00, 4),
-(17, 117, 9000, 720, 9720, 90.00, 3),
-(18, 118, 9500, 760, 10260, 0.00, 5),
-(19, 119, 10000, 800, 10800, 100.00, 4),
-(20, 120, 10500, 840, 11340, 0.00, 5);
+-- 商品テーブル
+CREATE TABLE items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) DEFAULT NULL,
+    jp_name VARCHAR(100) DEFAULT NULL,
+    description TEXT,
+    image_path VARCHAR(255),
+    price INT DEFAULT 0,
+    stock_quantity INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+-- 注文テーブル
+CREATE TABLE orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT DEFAULT 0,
+    total_price INT DEFAULT 0,
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(50) DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- 注文明細テーブル（各注文に含まれる商品）
+CREATE TABLE order_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT DEFAULT 0,
+    item_id INT DEFAULT 0,
+    quantity INT DEFAULT 0,
+    price INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- ユーザーデータを挿入
+INSERT INTO users (username, email, password) VALUES
+('alice', 'alice@example.com', 'hashed_password1'),
+('bob', 'bob@example.com', 'hashed_password2'),
+('charlie', 'charlie@example.com', 'hashed_password3');
+
+
+-- 商品データを挿入
+INSERT INTO items (name, jp_name, description, image_path, price, stock_quantity) VALUES
+('ballpen1', 'ボールペン1', 'High quality ballpen1', 'images/ballpen1.png', 500, 100),
+('ballpen2', 'ボールペン2', 'High quality ballpen2', 'images/ballpen2.png', 600, 150),
+('fountainpen', '万年筆', 'Luxury fountainpen', 'images/fountainpen.png', 1200, 50),
+('mechanicalpencil', 'シャープペンシル', 'Durable mechanical pencil', 'images/mechanicalpencil.png', 300, 200),
+('glasspen', 'ガラスペン', 'Elegant glass pen', 'images/glasspen.png', 1500, 30),
+('pencil', '鉛筆', 'Classic pencil', 'images/pencil.png', 100, 500);
+
