@@ -8,8 +8,12 @@ services:
     command: ["npm", "run", "dev"]
     working_dir: /usr/src/app
     environment:
-      - CHOKIDAR_USEPOLLING=true
-      - data_streaming_server=kafka:9092
+      CHOKIDAR_USEPOLLING: true
+      data_streaming_server: kafka:9092
+      DATABASE_NAME: marketproject
+      DATABASE_USER: pythonMySql1
+      DATABASE_PASSWORD: pythonMySql1
+      DATABASE_HOST: before_db
     tty: true
     volumes:
       - ./webserver/app:/usr/src/app

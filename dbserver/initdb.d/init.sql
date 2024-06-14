@@ -58,10 +58,9 @@ INSERT INTO users (username, email, password) VALUES
 
 -- 商品データを挿入
 INSERT INTO items (name, jp_name, description, image_path, price, stock_quantity) VALUES
-('ballpen1', 'ボールペン1', 'High quality ballpen1', 'images/ballpen1.png', 500, 100),
-('ballpen2', 'ボールペン2', 'High quality ballpen2', 'images/ballpen2.png', 600, 150),
-('fountainpen', '万年筆', 'Luxury fountainpen', 'images/fountainpen.png', 1200, 50),
-('mechanicalpencil', 'シャープペンシル', 'Durable mechanical pencil', 'images/mechanicalpencil.png', 300, 200),
-('glasspen', 'ガラスペン', 'Elegant glass pen', 'images/glasspen.png', 1500, 30),
-('pencil', '鉛筆', 'Classic pencil', 'images/pencil.png', 100, 500);
-
+('Ballpoint Pen 1', 'ボールペン1', '日々の書き心地をワンランクアップさせるボールペン1。スムーズなインクフローと洗練されたデザインで、ビジネスシーンやプライベートでも大活躍間違いなし！', '/image/ballpen1.png', 1000, 50),
+('Ballpoint Pen 2', 'ボールペン2', 'スタイリッシュかつ実用性を兼ね備えたボールペン2。握りやすいグリップと耐久性に優れたボディで、長時間の使用でも快適に書き続けられます。', '/image/ballpen2.png', 1200, 40),
+('Fountain Pen', '万年筆', '高級感あふれる筆記体験を提供する万年筆。優雅なデザインとスムーズなインクフローが、手紙やサインを格別なものにしてくれます。', '/image/fountainpen.png', 5000, 20),
+('Mechanical Pencil', 'シャープペンシル', '精密な筆記が可能なシャープペンシル。細かい作業やスケッチにも最適で、書きやすさと耐久性を両立した一本です。', '/image/mechanicalpencil.png', 800, 100),
+('Glass Pen', 'ガラスペン', '繊細で美しい筆記が楽しめるガラスペン。手作りの温かみと透明感あるデザインが、書く楽しさを一層引き立てます。', '/image/glasspen.png', 3000, 30),
+('Pencil', '鉛筆', 'シンプルで使いやすい鉛筆。なめらかな書き心地と自然なグリップ感で、日常のメモ書きからスケッチまで幅広く活躍します。', '/image/pencil.png', 100, 500);
