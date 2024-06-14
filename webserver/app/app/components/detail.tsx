@@ -4,7 +4,7 @@ import Image from "next/image";
 import { DetailItem } from "@/../types/typing/item.d"
 
 function AddOrder(id: number) {
-    console.log("カートに追加しました。: " + id);
+    alert("カートに追加しました。: " + id);
 }
 
 interface ItemProps {
@@ -24,7 +24,7 @@ export default function Detail({ data }: ItemProps) {
                             <h2>{data.jp_name}</h2>
                             <p>{data.description}</p>
                             <p><strong>価格:</strong> {data.price}</p>
-                            <button className="btn btn-primary" onClick={AddOrder(data.id)}>カートに入れる</button>
+                            <button className="btn btn-primary" onClick={() => AddOrder(data.id)}>カートに入れる</button>
                         </div>
                     </div>
                 </div>
