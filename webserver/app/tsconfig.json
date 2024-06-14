@@ -27,12 +27,13 @@
       "@/*": [
         "./*"
       ]
-    }
+    },
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "types/**/**.ts",
     ".next/types/**/*.ts"
   ],
   "exclude": [
