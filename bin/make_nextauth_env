@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+function make_nextauth_env() {
+  local cwd="$1"
+  cd "${cwd}"
+  # .envファイルが存在しない場合は作成する
+  if [ ! -f .env.local ]; then
+    touch .env.local
+  fi
+
+  # openssl rand -base64 32 の戻り値をSECRET変数に格納
+  SECRET=$(openssl rand -base64 32)
+
+  # .env.localファイルにNEXTAUTH_SECRETを追加
+  echo "NEXTAUTH_SECRET=$SECRET" >>.env.local
+
+  # .env.localファイルにNEXTAUTH_URLを追加
+  echo "NEXTAUTH_URL=http://localhost:3000" >>.env.local
+
+  echo ".env.localファイルを作成し、NEXTAUTH_SECRETとNEXTAUTH_URLを設定しました。"
+}
+
+function main() {
+  local cwd
+  cwd="$(cd "$(dirname "$0")/../webserver/app" && pwd)"
+  make_nextauth_env "${cwd}"
+
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  main "$@"
+fi

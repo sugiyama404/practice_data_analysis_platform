@@ -2,9 +2,23 @@
 //@ts-ignore
 import Image from "next/image";
 import { DetailItem } from "@/../types/typing/item.d"
+import ModalMessage from "@/components/modalmessage"
+
+import { modallist } from "@/../types/utils/modal"
+
+function ModalAction(id: string) {
+    //@ts-ignore
+    const modal = new bootstrap.Modal(`#${id}`);
+    modal.show();
+    setTimeout(() => {
+        setTimeout(() => {
+            modal.hide();
+        }, 1000);
+    }, 2000);
+}
 
 function AddOrder(id: number) {
-    alert("カートに追加しました。: " + id);
+    ModalAction(modallist[0].target_id)
 }
 
 interface ItemProps {
@@ -29,6 +43,12 @@ export default function Detail({ data }: ItemProps) {
                     </div>
                 </div>
             </div>
+            {modallist.map((modal, index) => (
+                <div key={index}>
+                    <ModalMessage info={modal} />
+                </div>
+            ))
+            }
         </>
     );
 };

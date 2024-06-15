@@ -8,6 +8,7 @@ import "./bootstrap.min.css"
 import Script from 'next/script'
 
 import { Header } from './components/header';
+import Provider from './components/provider';
 
 export const metadata: Metadata = {
   title: "ペン屋本舗",
@@ -22,10 +23,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
-        <Script src="/assert/bootstrap.bundle.min.js"></Script>
-        <Script src="/assert/jquery-3.7.1.min.js"></Script>
+        <Provider>
+          <Header />
+          {children}
+          <Script src="/assert/bootstrap.bundle.min.js"></Script>
+          <Script src="/assert/jquery-3.7.1.min.js"></Script>
+        </Provider>
       </body>
     </html>
   );

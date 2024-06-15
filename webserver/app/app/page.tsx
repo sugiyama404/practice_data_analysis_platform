@@ -7,7 +7,7 @@ import * as mysql from 'promise-mysql';
 //@ts-ignore
 import Link from 'next/link';
 
-import { DbConn } from "../types/typing/env"
+import { DbConn } from "@/../types/utils/env"
 import { HomeItem } from "../types/typing/item.d"
 import { getallitem } from "../types/utils/queries"
 
