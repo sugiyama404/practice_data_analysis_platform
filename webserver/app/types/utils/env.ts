@@ -1,5 +1,4 @@
-import MysqlConnect from "@/../types/typing/env.d"
-declare type MysqlConnect = typeof MysqlConnect
+import { MysqlConnect } from "@/../types/typing/env.d"
 
 export const DbConn: MysqlConnect = {
     //@ts-ignore

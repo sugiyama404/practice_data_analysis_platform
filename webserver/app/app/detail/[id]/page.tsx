@@ -3,7 +3,7 @@ import * as mysql from 'promise-mysql';
 //@ts-ignore
 import "../.././page.module.css";
 
-import { DbConn } from "@/../types/typing/env"
+import { DbConn } from "@/../types/utils/env"
 import { DetailItem } from "@/../types/typing/item.d"
 import { getitem } from "@/../types/utils/queries"
 
