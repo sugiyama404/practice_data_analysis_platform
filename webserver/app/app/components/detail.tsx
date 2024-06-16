@@ -5,7 +5,7 @@ import { DetailItem } from "@/../types/typing/item.d"
 import ModalMessage from "@/components/modalmessage"
 
 import { modallist } from "@/../types/utils/modal"
-import { IsOrder, createOrder, addItemToOrder, updateOrderTotalPrice } from "@/../types/utils/queries"
+import { IsOrder, createOrder, addOrUpdateOrderItem, addItemToOrder, updateOrderTotalPrice } from "@/../types/utils/queries"
 
 //@ts-ignore
 import { useSession } from "next-auth/react";
@@ -51,7 +51,7 @@ async function AddOrder(itemid: number, price: number, session: any) {
         const sql4 = addItemToOrder(orderid, itemid, 1, price)
         await db_requst("POST", sql4)
     } else {
-        const sql5 = addItemToOrder(res[0]["id"], itemid, 1, price)
+        const sql5 = addOrUpdateOrderItem(res[0]["id"], itemid, 1, price)
         await db_requst("POST", sql5)
         const sql6 = updateOrderTotalPrice(res[0]["id"])
         await db_requst("PUT", sql6)
