@@ -21,14 +21,14 @@ function ModalAction(id: string) {
     }, 2000);
 }
 
-async function db_requst(mth: string, sql_s: string) {
+async function db_requst(mth: string, sqlQuery: string) {
     const res = await fetch("/api/db/order", {
         method: mth,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ sql: sql_s }),
+        body: JSON.stringify({ sql: sqlQuery }),
     });
     return res.json();
 }
