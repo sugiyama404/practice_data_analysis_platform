@@ -38,6 +38,19 @@ export const addItemToOrder = (order_id: number, item_id: number, quantity: numb
     `
 }
 
+//注文明細を追加
+export const addOrUpdateOrderItem = (order_id: number, item_id: number, quantity: number, price: number): string => {
+    return `
+    INSERT INTO order_items (order_id, item_id, quantity, price)
+    VALUES (${order_id}, ${item_id}, ${quantity}, ${price})
+    ON DUPLICATE KEY UPDATE
+    quantity = quantity + ${quantity},
+    price = ${price},
+    updated_at = CURRENT_TIMESTAMP;
+    `
+}
+
+
 //注文の詳細を取得
 export const getOrderDetails = (order_id: number): string => {
     return `
