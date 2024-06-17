@@ -13,13 +13,6 @@ import { getallitem } from "../types/utils/queries"
 
 import { sendMessage } from "@/../types/utils/stringdate"
 
-// async function sendMessage() {
-//   const res = await fetch('http://localhost:3000/api/kafka/action', {
-//     method: 'GET'
-//   });
-//   console.log(res)
-// }
-
 async function getAllItems() {
   const connection = await mysql.createConnection(DbConn);
   const sql = getallitem;
