@@ -113,3 +113,4 @@ memo.txt
 dataanalysis/strage/
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,nextjs
+dataanalysis/spark/log/access.log
