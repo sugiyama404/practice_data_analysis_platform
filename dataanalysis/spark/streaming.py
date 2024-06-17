@@ -1,3 +1,5 @@
+from pyspark import SparkConf
+from pyspark import SparkContext
 from pyspark.sql import SparkSession
 
 spark = SparkSession.builder \
@@ -15,7 +17,7 @@ df = spark \
   .readStream \
   .format("kafka") \
   .option("kafka.bootstrap.servers", "kafka:9092") \
-  .option("subscribe", "pyspark-topic") \
+  .option("subscribe", "useractionlog-topic") \
   .load()
 
 file_stream = df \

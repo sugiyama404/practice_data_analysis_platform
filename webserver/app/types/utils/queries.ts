@@ -13,7 +13,7 @@ export const getitem = (id: number) => {
 // ユーザーが存在するか確認するための関数を定義
 export const IsUser = (email: string, password: string) => {
     return `
-    SELECT id, username, password, email FROM users WHERE email = '${email}' AND password = '${password}';
+    SELECT id, username, password, email, age, gender, occupation FROM users WHERE email = '${email}' AND password = '${password}';
     `
 }
 

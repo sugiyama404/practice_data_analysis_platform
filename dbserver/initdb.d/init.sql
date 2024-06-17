@@ -9,6 +9,9 @@ CREATE TABLE users (
     username VARCHAR(50) DEFAULT NULL,
     email VARCHAR(100) DEFAULT NULL,
     password VARCHAR(255) DEFAULT NULL,
+    age INT DEFAULT NULL,
+    gender VARCHAR(10) DEFAULT NULL,
+    occupation VARCHAR(100) DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -51,10 +54,10 @@ CREATE TABLE order_items (
 );
 
 -- ユーザーデータを挿入
-INSERT INTO users (username, email, password) VALUES
-('alice', 'alice@example.com', 'hashed_password1'),
-('bob', 'bob@example.com', 'hashed_password2'),
-('charlie', 'charlie@example.com', 'hashed_password3');
+INSERT INTO users (username, email, password, age, gender, occupation) VALUES
+('alice', 'alice@example.com', 'hashed_password1', 25, 'F', 'Engineer'),
+('bob', 'bob@example.com', 'hashed_password2', 30, 'M', 'Designer'),
+('charlie', 'charlie@example.com', 'hashed_password3', 28, 'M', 'Teacher');
 
 
 -- 商品データを挿入

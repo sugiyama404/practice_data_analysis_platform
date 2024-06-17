@@ -4,6 +4,7 @@ import { Kafka, KafkaConfig } from 'kafkajs';
 import { options } from '@/api/auth/[...nextauth]/options'
 //@ts-ignore
 import { getServerSession } from "next-auth/next"
+import { Userinfo } from "@/../../types/typing/user.d"
 
 export function currentDate(): string {
     const today = new Date();
@@ -23,18 +24,29 @@ export function currentDate(): string {
     return formattedDateStr;
 }
 
-async function currentJPDate() {
-    //2024/06/17
+async function currentJPTime() {
+    //20:08:59
+    //2006-06-03 16:07:43
     const today = new Date();
-    const options: Intl.DateTimeFormatOptions = {
+    const options1: Intl.DateTimeFormatOptions = {
         timeZone: 'Asia/Tokyo',
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
     };
+    const options2: Intl.DateTimeFormatOptions = {
+        timeZone: 'Asia/Tokyo',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+    };
 
-    const dateStr = today.toLocaleDateString('ja-JP', options);
-    return dateStr;
+    const dateStr = today.toLocaleDateString('ja-JP', options1);
+    const timeStr = today.toLocaleTimeString('ja-JP', options2);
+
+    const [year, month, day] = dateStr.split('/');
+    const formattedDateStr = `${year}-${month}-${day}`;
+    return `${formattedDateStr} ${timeStr}`;
 }
 
 async function getUserInfo() {
@@ -48,20 +60,39 @@ async function getUserInfo() {
     //     jti: '77df4422-1330-42b3-b267-654d975e8589'
     //   }
     const session = await getServerSession(options);
-    const usrinfo: any = session?.user;
+    const usrinfo: Userinfo = session?.user;
     return usrinfo;
 }
 
 export async function sendMessage(action: string) {
     const kafkaConfig: KafkaConfig = { brokers: ['kafka:9092'], clientId: 'pyspark' }
     const kafka = new Kafka(kafkaConfig)
+    const usrinfo = await getUserInfo()
     const nowdate = await currentDate()
+    const nowtime = await currentJPTime()
+    console.log(usrinfo)
+    const userInfoExists = usrinfo.id ? true : false;
+
     const message = {
         key: `${nowdate}`,
-        value: `{"name": "yuki" , "action": "${action}", "sendtime": ${Date.now()}}`
+        value: JSON.stringify({
+            userid: userInfoExists ? usrinfo.id : "999",
+            userage: userInfoExists ? usrinfo.age : "1",
+            usergender: userInfoExists ? usrinfo.gender : "none",
+            useroccupation: userInfoExists ? usrinfo.occupation : "none",
+            useraction: action,
+            Actiontimestamp: nowtime
+        })
+    };
+
+    console.log(message)
+    const producer = kafka.producer();
+    await producer.connect();
+    try {
+        await producer.send({ topic: 'useractionlog-topic', messages: [message] });
+    } catch (error) {
+        console.error('Error sending message to Kafka:', error);
+    } finally {
+        await producer.disconnect();
     }
-    const producer = kafka.producer()
-    await producer.connect()
-    producer.send({ topic: 'pyspark-topic', messages: [message] })
-    await producer.disconnect()
 }

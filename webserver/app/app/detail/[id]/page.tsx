@@ -7,6 +7,8 @@ import { DbConn } from "@/../types/utils/env"
 import { DetailItem } from "@/../types/typing/item.d"
 import { getitem } from "@/../types/utils/queries"
 
+import { sendMessage } from "@/../types/utils/stringdate"
+
 import Detail from "@/components/detail"
 
 async function getItem(id: number) {
@@ -18,6 +20,7 @@ async function getItem(id: number) {
 }
 
 export default async function Page({ params }: { params: { id: number } }) {
+    await sendMessage("detail")
     const itemdata: DetailItem = await getItem(params.id);
     const plainItemData: DetailItem = {
         id: itemdata.id,

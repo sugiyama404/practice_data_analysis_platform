@@ -14,9 +14,16 @@ in:
     allow_optional_columns: false
     columns:
       - { name: "key", type: string }
-      - { name: "name", type: string }
-      - { name: "action", type: string }
-      - { name: "sendtime", type: string }
+      - { name: "userid", type: long }
+      - { name: "userage", type: long }
+      - { name: "usergender", type: string }
+      - { name: "useroccupation", type: string }
+      - { name: "useraction", type: string }
+      - {
+          name: "Actiontimestamp",
+          type: timestamp,
+          format: "%Y-%m-%d %H:%M:%S",
+        }
 
 out:
   type: mysql

@@ -1,7 +1,9 @@
 //@ts-ignore
 import Link from 'next/link';
+import { sendMessage } from "@/../types/utils/stringdate"
 
 export default async function Page() {
+    await sendMessage("thanks")
     return (
         <main>
             <div className="d-flex justify-content-center align-items-center vh-100">

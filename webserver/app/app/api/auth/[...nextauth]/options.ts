@@ -32,7 +32,14 @@ export const options: NextAuthOptions = {
                     return null
                 } else {
                     const userinfo = res;
-                    const user = { id: userinfo.id, name: userinfo.username, email: userinfo.email }
+                    const user = {
+                        id: userinfo.id,
+                        name: userinfo.username,
+                        email: userinfo.email,
+                        age: userinfo.age,
+                        gender: userinfo.gender,
+                        occupation: userinfo.occupation
+                    }
                     return user
                 }
             }
@@ -46,12 +53,19 @@ export const options: NextAuthOptions = {
         async jwt({ token, user }) {
             if (user) {
                 token.id = user.id
+                token.age = user.age
+                token.gender = user.gender
+                token.occupation = user.occupation
+
             }
             return token
         },
         async session({ session, token }) {
             if (session?.user) {
                 session.user.id = token.id
+                session.user.age = token.age
+                session.user.gender = token.gender
+                session.user.occupation = token.occupation
             }
             return session
         },

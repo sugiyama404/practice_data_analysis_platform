@@ -7,6 +7,8 @@ import * as mysql from 'promise-mysql';
 
 import BasketCard from "@/components/basketcard"
 
+import { sendMessage } from "@/../types/utils/stringdate"
+
 import { IsOrder, getOrderDetails } from "@/../types/utils/queries"
 import { DbConn } from "@/../types/utils/env"
 import { OrderDetails } from "@/../types/typing/order"
@@ -31,6 +33,8 @@ async function idOrder(userid: number) {
 }
 
 export default async function Page() {
+    await sendMessage("baskets")
+
     const userid = await getuserid()
     const res = await idOrder(userid)
     const plainItemData: OrderDetails[] = [];
