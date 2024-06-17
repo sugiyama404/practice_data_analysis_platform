@@ -75,8 +75,8 @@ export async function sendMessage(action: string) {
     const message = {
         key: `${nowdate}`,
         value: JSON.stringify({
-            userid: userInfoExists ? usrinfo.id : "999",
-            userage: userInfoExists ? usrinfo.age : "1",
+            userid: userInfoExists ? usrinfo.id.toString() : "999",
+            userage: userInfoExists ? usrinfo.age.toString() : "999",
             usergender: userInfoExists ? usrinfo.gender : "none",
             useroccupation: userInfoExists ? usrinfo.occupation : "none",
             useraction: action,
@@ -90,11 +90,4 @@ export async function sendMessage(action: string) {
 
     await producer.send({ topic: 'useractionlog-topic', messages: [message] });
     await producer.disconnect();
-    // try {
-    //     await producer.send({ topic: 'useractionlog-topic', messages: [message] });
-    // } catch (error) {
-    //     console.error('Error sending message to Kafka:', error);
-    // } finally {
-    //     await producer.disconnect();
-    // }
 }
