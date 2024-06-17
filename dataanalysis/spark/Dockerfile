@@ -67,7 +67,7 @@ RUN embulk gem install JRuby-OpenSSL \
     embulk-output-parquet
 
 # spark session用のディレクトリ
-RUN mkdir /tmp/spark-events \
+RUN mkdir -p /tmp/spark-events \
     chmod 777 /tmp/spark-events
 
 # TimeZone (Asia/Tokyo)の設定

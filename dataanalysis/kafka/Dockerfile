@@ -7,7 +7,7 @@ RUN apt-get update && \
     apt-get install -y openjdk-11-jre-headless wget gnupg && \
     rm -rf /var/lib/apt/lists/*
 
-RUN wget https://archive.apache.org/dist/kafka/${KAFKA_VERSION}/kafka_${SCALA_VERSION}.tgz && \
+RUN wget https://archive.apache.org/dist/kafka/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz && \
     tar -xzf kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz && \
     mv kafka_${SCALA_VERSION}-${KAFKA_VERSION} /opt/kafka && \
     rm kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz
