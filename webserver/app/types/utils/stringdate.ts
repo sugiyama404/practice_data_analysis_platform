@@ -70,7 +70,6 @@ export async function sendMessage(action: string) {
     const usrinfo = await getUserInfo()
     const nowdate = await currentDate()
     const nowtime = await currentJPTime()
-    console.log(usrinfo)
     const userInfoExists = usrinfo.id ? true : false;
 
     const message = {
@@ -88,11 +87,14 @@ export async function sendMessage(action: string) {
     console.log(message)
     const producer = kafka.producer();
     await producer.connect();
-    try {
-        await producer.send({ topic: 'useractionlog-topic', messages: [message] });
-    } catch (error) {
-        console.error('Error sending message to Kafka:', error);
-    } finally {
-        await producer.disconnect();
-    }
+
+    await producer.send({ topic: 'useractionlog-topic', messages: [message] });
+    await producer.disconnect();
+    // try {
+    //     await producer.send({ topic: 'useractionlog-topic', messages: [message] });
+    // } catch (error) {
+    //     console.error('Error sending message to Kafka:', error);
+    // } finally {
+    //     await producer.disconnect();
+    // }
 }
