@@ -69,7 +69,6 @@ INSERT INTO items (name, jp_name, description, image_path, price, stock_quantity
 ('Glass Pen', 'ガラスペン', '繊細で美しい筆記が楽しめるガラスペン。手作りの温かみと透明感あるデザインが、書く楽しさを一層引き立てます。', '/image/glasspen.png', 3000, 30),
 ('Pencil', '鉛筆', 'シンプルで使いやすい鉛筆。なめらかな書き心地と自然なグリップ感で、日常のメモ書きからスケッチまで幅広く活躍します。', '/image/pencil.png', 100, 500);
 
-
 INSERT INTO `orders` (`id`, `user_id`, `total_price`, `order_date`, `status`, `created_at`, `updated_at`) VALUES
 (1, 1, 5000, '2024-06-18 18:35:08', 'done', '2024-06-18 18:35:08', '2024-06-18 18:35:29'),
 (2, 1, 2200, '2024-06-18 18:41:17', 'pending', '2024-06-18 18:41:17', '2024-06-18 18:41:23');

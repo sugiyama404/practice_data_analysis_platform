@@ -1,6 +1,6 @@
 in:
   type: file
-  path_prefix: /tmp/share_file/datamart/order_tracker/
+  path_prefix: /tmp/share_file/datamart/users/
   parser:
     charset: UTF-8
     newline: CRLF
@@ -13,8 +13,10 @@ in:
     allow_extra_columns: false
     allow_optional_columns: false
     columns:
-      - { name: "product_id", type: string }
-      - { name: "user_id", type: string }
+      - { name: "id", type: long }
+      - { name: "age", type: string }
+      - { name: "gender", type: string }
+      - { name: "occupation", type: string }
 
 out:
   type: mysql
@@ -25,4 +27,4 @@ out:
   user: pythonMySql1
   password: pythonMySql1
   database: marketproject
-  table: order_tracker
+  table: users

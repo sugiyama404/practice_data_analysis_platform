@@ -4,9 +4,11 @@ from pyspark.sql import SparkSession
 
 datalake_name = "datalake"
 datamart_name = "datamart"
-table_name = "order_tracker"
+table_name = "users"
 datalake_path = f"/tmp/share_file/{datalake_name}/{table_name}"
 datamart_path = f"/tmp/share_file/{datamart_name}/{table_name}"
+
+sqlQuery = f"select id, age, (gender as string), (occupation as string) from {table_name}"
 
 def main():
     spark = SparkSession.builder \
@@ -20,7 +22,9 @@ def main():
     .getOrCreate()
 
     df=spark.read.parquet(datalake_path)
-    df.coalesce(1).write.mode('overwrite').csv(datamart_path)
+    df.createOrReplaceTempView(table_name)
+    result = spark.sql(sqlQuery)
+    result.coalesce(1).write.mode('overwrite').csv(datamart_path)
 
     spark.stop()
 

@@ -13,13 +13,22 @@ _export:
   echo>: ${start_msg}
 
 +extract:
-  embulk>: ./db_config.yml
+  embulk>: ./users_config.yml
+  embulk>: ./items_config.yml
+  embulk>: ./orders_config.yml
+  embulk>: ./order_items_config.yml
 
 +transform:
-  sh>: spark-submit dbanalyzer.py
+  sh>: spark-submit usersanalyzer.py
+  sh>: spark-submit itemsanalyzer.py
+  sh>: spark-submit ordersanalyzer.py
+  sh>: spark-submit order_itemsanalyzer.py
 
 +load:
-  embulk>: ./db_load.yml
+  embulk>: ./users_load.yml
+  embulk>: ./items_load.yml
+  embulk>: ./orders_load.yml
+  embulk>: ./order_items_load.yml
 
 +end:
   echo>: ${end_msg}
