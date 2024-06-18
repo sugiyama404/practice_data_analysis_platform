@@ -5,7 +5,7 @@ in:
   password: pythonMySql1
   database: marketproject
   query: |
-    select id, user_id, total_price, order_date
+    select id, user_id, total_price, status
     from orders
 out:
   type: parquet

@@ -16,7 +16,7 @@ in:
       - { name: "id", type: long }
       - { name: "user_id", type: long }
       - { name: "total_price", type: long }
-      - { name: "order_date", type: long }
+      - { name: "status", type: string }
 
 out:
   type: mysql

@@ -9,6 +9,6 @@ in:
     from order_items
 out:
   type: parquet
-  path_prefix: /tmp/share_file/datalake/order_tracker/order_tracker
+  path_prefix: /tmp/share_file/datalake/order_items/order_items
   compression_codec: GZIP
   overwrite: true

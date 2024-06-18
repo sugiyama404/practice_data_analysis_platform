@@ -8,7 +8,7 @@ table_name = "items"
 datalake_path = f"/tmp/share_file/{datalake_name}/{table_name}"
 datamart_path = f"/tmp/share_file/{datamart_name}/{table_name}"
 
-sqlQuery = f"select id, (name as string), (jp_name as string), price, stock_quantity from {table_name}"
+sqlQuery = f"select id, CAST(name AS string) AS name, CAST(jp_name AS string) AS jp_name, price, stock_quantity from {table_name}"
 
 def main():
     spark = SparkSession.builder \
