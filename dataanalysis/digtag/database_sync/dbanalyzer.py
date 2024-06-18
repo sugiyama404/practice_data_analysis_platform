@@ -4,7 +4,7 @@ from pyspark.sql import SparkSession
 
 datalake_name = "datalake"
 datamart_name = "datamart"
-table_name = "orders"
+table_name = "order_tracker"
 datalake_path = f"/tmp/share_file/{datalake_name}/{table_name}"
 datamart_path = f"/tmp/share_file/{datamart_name}/{table_name}"
 

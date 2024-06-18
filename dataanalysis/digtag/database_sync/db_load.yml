@@ -1,6 +1,6 @@
 in:
   type: file
-  path_prefix: /tmp/share_file/datamart/orders/
+  path_prefix: /tmp/share_file/datamart/order_tracker/
   parser:
     charset: UTF-8
     newline: CRLF
@@ -25,4 +25,4 @@ out:
   user: pythonMySql1
   password: pythonMySql1
   database: marketproject
-  table: etl_load
+  table: order_tracker

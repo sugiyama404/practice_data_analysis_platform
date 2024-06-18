@@ -5,10 +5,10 @@ in:
   password: pythonMySql1
   database: marketproject
   query: |
-    select product_id,user_id
+    select product_id, user_id
     from orders
 out:
   type: parquet
-  path_prefix: /tmp/share_file/datalake/orders/orders
+  path_prefix: /tmp/share_file/datalake/order_tracker/order_tracker
   compression_codec: GZIP
   overwrite: true
