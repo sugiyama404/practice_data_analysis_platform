@@ -1,0 +1,5 @@
+secret:
+  ignored_paths:
+    - "dataanalysis/digtag/data_sync/*"
+    - "dataanalysis/digtag/database_sync/*"
+    - "compose.yaml"

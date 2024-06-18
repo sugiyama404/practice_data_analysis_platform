@@ -2,6 +2,12 @@
 # coding: utf-8
 from pyspark.sql import SparkSession
 
+datalake_name = "datalake"
+datamart_name = "datamart"
+table_name = "orders"
+datalake_path = f"/tmp/share_file/{datalake_name}/{table_name}"
+datamart_path = f"/tmp/share_file/{datamart_name}/{table_name}"
+
 def main():
     spark = SparkSession.builder \
     .appName("etl") \
@@ -13,8 +19,8 @@ def main():
     .enableHiveSupport() \
     .getOrCreate()
 
-    df=spark.read.parquet("/tmp/share_file/datalake/orders/")
-    df.coalesce(1).write.mode('overwrite').csv("/tmp/share_file/datamart/orders/")
+    df=spark.read.parquet(datalake_path)
+    df.coalesce(1).write.mode('overwrite').csv(datamart_path)
 
     spark.stop()
 

@@ -33,9 +33,11 @@ services:
       "./dataanalysis/spark"
     container_name: "spark_market"
     entrypoint: ["/home/pyspark/docker-entrypoint.sh"]
+    restart: always
     volumes:
       - ./dataanalysis/strage:/tmp/share_file
       - ./dataanalysis/spark/log:/var/log/digdag
+      - ./dataanalysis/spark/streaming.py:/home/pyspark/streaming.py
     tty: true
     ports:
       - 65432:65432

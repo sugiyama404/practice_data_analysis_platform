@@ -2,6 +2,20 @@
 # coding: utf-8
 from pyspark.sql import SparkSession
 
+datalake_name = "datalake"
+datamart_name = "datamart"
+table_name = "web_actions"
+datalake_path = f"/tmp/share_file/{datalake_name}/{table_name}"
+datamart_path = f"/tmp/share_file/{datamart_name}/{table_name}"
+
+value_column = ['userid', 'userage', 'usergender', 'useroccupation', 'useraction', 'Actiontimestamp']
+
+sqlQuery = f"""
+SELECT key, {', '.join(value_column)}
+FROM web_actions
+LATERAL VIEW json_tuple(value, {', '.join([f"'{col}'" for col in value_column])}) jt AS {', '.join(value_column)}
+"""
+
 def main():
     spark = SparkSession.builder \
     .appName("etl") \
@@ -13,10 +27,10 @@ def main():
     .enableHiveSupport() \
     .getOrCreate()
 
-    df=spark.read.parquet("/tmp/share_file/datalake/web_actions")
-    df.createOrReplaceTempView("web_actions")
-    result_df=spark.sql("select key,name,action,sendtime from web_actions LATERAL VIEW json_tuple(value,'name','action','sendtime') user as name, action,sendtime ")
-    result_df.coalesce(1).write.mode('overwrite').csv("/tmp/share_file/datamart/web_actions/")
+    df=spark.read.parquet(datalake_path)
+    df.createOrReplaceTempView(table_name)
+    result_df=spark.sql(sqlQuery)
+    result_df.coalesce(1).write.mode('overwrite').csv(datamart_path)
 
     spark.stop()
 

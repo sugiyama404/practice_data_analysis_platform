@@ -84,10 +84,8 @@ export async function sendMessage(action: string) {
         })
     };
 
-    console.log(message)
     const producer = kafka.producer();
     await producer.connect();
-
     await producer.send({ topic: 'useractionlog-topic', messages: [message] });
     await producer.disconnect();
 }
