@@ -41,11 +41,11 @@ services:
     tty: true
     ports:
       - 65432:65432
-  # metabase:
-  #   image: metabase/metabase:v0.42.3
-  #   ports:
-  #     - 3001:3000
-  #   container_name: metabase_market
+  metabase:
+    image: metabase/metabase:v0.42.3
+    ports:
+      - 3001:3000
+    container_name: metabase_market
   before_db:
     image: mysql:8.0.37-oracle
     container_name: "db_before_market"
