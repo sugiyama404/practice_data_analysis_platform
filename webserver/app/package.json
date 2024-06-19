@@ -1,0 +1,29 @@
+{
+  "name": "app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@ovotech/avro-kafkajs": "^0.8.1",
+    "@upstash/kafka": "^1.3.5",
+    "kafkajs": "^1.15.0",
+    "net": "^1.0.2",
+    "next": "14.2.4",
+    "next-auth": "^4.24.7",
+    "promise-mysql": "^5.2.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "tls": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.2",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
+  }
+}

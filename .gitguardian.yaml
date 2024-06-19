@@ -1,0 +1,4 @@
+secret:
+  ignored_paths:
+    - "dataanalysis/digtag/*"
+    - "compose.yaml"

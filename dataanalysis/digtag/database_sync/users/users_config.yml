@@ -1,0 +1,14 @@
+in:
+  type: mysql
+  host: before_db
+  user: pythonMySql1
+  password: pythonMySql1
+  database: marketproject
+  query: |
+    select id, age, gender, occupation
+    from users
+out:
+  type: parquet
+  path_prefix: /tmp/share_file/datalake/users/users
+  compression_codec: GZIP
+  overwrite: true

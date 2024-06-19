@@ -1,0 +1,28 @@
+timezone: Asia/Tokyo
+
+schedule:
+  daily>: 07:00:00
+
+_export:
+  workflow_name: "mysqlsync"
+  start_msg:     "digdag ${workflow_name} start"
+  end_msg:       "digdag ${workflow_name} finish"
+  error_msg:     "digdag ${workflow_name} error"
+
++strat:
+  echo>: ${start_msg}
+
++extract:
+  embulk>: ./order_items_config.yml
+
++transform:
+  sh>: spark-submit orderitemsanalyzer.py
+
++load:
+  embulk>: ./order_items_load.yml
+
++end:
+  echo>: ${end_msg}
+
+_error:
+  echo>: ${error_msg}

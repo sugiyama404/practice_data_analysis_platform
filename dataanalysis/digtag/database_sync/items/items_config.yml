@@ -1,0 +1,14 @@
+in:
+  type: mysql
+  host: before_db
+  user: pythonMySql1
+  password: pythonMySql1
+  database: marketproject
+  query: |
+    select id, name, jp_name, price, stock_quantity
+    from items
+out:
+  type: parquet
+  path_prefix: /tmp/share_file/datalake/items/items
+  compression_codec: GZIP
+  overwrite: true

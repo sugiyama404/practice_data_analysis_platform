@@ -1,0 +1,30 @@
+in:
+  type: file
+  path_prefix: /tmp/share_file/datamart/orders/
+  parser:
+    charset: UTF-8
+    newline: CRLF
+    type: csv
+    delimiter: ","
+    quote: '"'
+    escape: '"'
+    trim_if_not_quoted: false
+    skip_hander_lines: 1
+    allow_extra_columns: false
+    allow_optional_columns: false
+    columns:
+      - { name: "id", type: long }
+      - { name: "user_id", type: long }
+      - { name: "total_price", type: long }
+      - { name: "status", type: string }
+
+out:
+  type: mysql
+  mode: truncate_insert
+  default_timezone: "Asia/Tokyo"
+  host: after_db
+  port: 3307
+  user: pythonMySql1
+  password: pythonMySql1
+  database: marketproject
+  table: orders
