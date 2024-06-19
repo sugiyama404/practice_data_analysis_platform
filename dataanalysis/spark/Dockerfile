@@ -3,10 +3,10 @@ FROM openjdk:8
 # 環境変数を設定
 ENV DEBIAN_FRONTEND=noninteractive
 ENV EMBULK_VERSION=0.9.25
-ENV DIGTAG_VERSION=0.10.4
+ENV DIGDAG_VERSION=0.10.4
 ENV PYSPARK_VERSION=3.2.4
 ENV SPARK_HOME=/opt/spark
-ENV DIGTAG_HOME=/opt/digdag
+ENV DIGDAG_HOME=/opt/digdag
 ENV KAFKA_VERSION=3.0.2 \
     SCALA_VERSION=2.13
 ENV KAFKA_HOME=/opt/kafka
@@ -36,11 +36,11 @@ RUN mkdir -p /root/.embulk/lib/gems && \
     echo 'm2_repo: /root/.embulk/lib/m2/repository' >> /root/.embulk/embulk.properties
 
 # Digdagをインストール
-RUN curl -o /usr/local/bin/digdag --create-dirs -L "https://dl.digdag.io/digdag-${DIGTAG_VERSION}" && \
+RUN curl -o /usr/local/bin/digdag --create-dirs -L "https://dl.digdag.io/digdag-${DIGDAG_VERSION}" && \
     chmod +x /usr/local/bin/digdag
 
-RUN mkdir -p ${DIGTAG_HOME}
-COPY server.properties ${DIGTAG_HOME}/
+RUN mkdir -p ${DIGDAG_HOME}
+COPY server.properties ${DIGDAG_HOME}/
 
 # PySparkをインストール
 RUN pip3 install --no-cache-dir pyspark==$PYSPARK_VERSION
