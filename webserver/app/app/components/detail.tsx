@@ -17,8 +17,8 @@ function ModalAction(id: string) {
     setTimeout(() => {
         setTimeout(() => {
             modal.hide();
-        }, 1000);
-    }, 2000);
+        }, 500);
+    }, 1500);
 }
 
 async function db_requst(mth: string, sqlQuery: string) {
