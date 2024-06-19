@@ -84,9 +84,9 @@ services:
       - 3307
     cap_add:
       - SYS_NICE
-  digtag_db:
+  digdag_db:
     image: postgres:16-bookworm
-    container_name: "db_digtag_market"
+    container_name: "db_digdag_market"
     restart: always
     environment:
       POSTGRES_DB: marketproject
