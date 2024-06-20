@@ -1,4 +1,4 @@
-# 文房具ECサイトのデータ分析基盤構築
+# 文房具専門ECサイトのデータ分析基盤構築
 
 <p align="center">
   <img src="sources/movie.gif" alt="animated" width="400">
