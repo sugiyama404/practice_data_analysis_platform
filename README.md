@@ -56,10 +56,10 @@
 + 売上データ
 + 売上詳細データ
 ### プロセス
-+ データ抽出: MySQLデータベースからEmbulkを使用してデータを取得。
-+ データ整形: Apache Sparkを用いてデータを整形・変換。
-+ データ保存: 整形されたデータをCSV形式でストレージに保存。
-+ データ移行: Digdagを利用して、整形後のデータを別のデータベースに移行。
++ データ抽出: MySQLデータベースからEmbulkを使用してデータを取得
++ データ整形: Apache Sparkを用いてデータを整形・変換
++ データ保存: 整形されたデータをCSV形式でストレージに保存
++ データ移行: Digdagを利用して、整形後のデータを別のデータベースに移行
 
 ## 2. リアルタイムデータ
 ### データ項目
@@ -71,17 +71,17 @@
 + 閲覧時刻
 
 ### プロセス
-+ データ収集: webアプリケーション上でリアルタイムにデータを収集。
-+ データ送信: Apache Kafkaを介してストリーミングデータを送信。
-+ データ保存: Spark Streamingを使用してデータをストレージに保存。
-+ データ移行: Digdagを利用して、リアルタイムデータを別のデータベースに保存。
++ データ収集: webアプリケーション上でリアルタイムにデータを収集
++ データ送信: Apache Kafkaを介してストリーミングデータを送信
++ データ保存: Spark Streamingを使用してデータをストレージに保存
++ データ移行: Digdagを利用して、リアルタイムデータを別のデータベースに保存
 
 # データベース構成
-+ MySQL: メインデータベースとして使用。
-+ PostgreSQL: データバックアップの目的で使用。データの信頼性と冗長性を確保。
++ MySQL: メインデータベースとして使用
++ PostgreSQL: データバックアップの目的で使用。データの信頼性と冗長性を確保
 
 # データアクセスレイヤー
-+ Metabase: データの可視化および分析ツール。これにより、ビジネスインサイトの迅速な取得が可能。
++ Metabase: データの可視化および分析ツール。これにより、ビジネスインサイトの迅速な取得が可能
 
 # 起動方法
 
@@ -128,18 +128,18 @@ docker compose up
 ```
 
 + bin: Bashスクリプトが含まれています。
-+ compose.yml: Docker Composeの設定ファイルです。
-+ dataanalysis: データ分析基盤の設定ファイルが含まれています。
-    + digdag: データベース同期およびWebデータ同期用のスクリプトが含まれています。
-    + kafka: Apache KafkaのDockerfileが含まれています。
-    + spark: Apache Spark関連のファイルが含まれています。
-        + Dockerfile: SparkのDockerイメージを作成するためのファイルです。
-        + docker-entrypoint.sh: Dockerコンテナ起動時に実行されるエントリポイントスクリプトです。
-        + server.properties: Sparkサーバーの設定ファイルです。
-        + streaming.py: ストリーミング処理を行うPythonスクリプトです。
-+ dbserver: データベースサーバー関連のファイルが含まれています。
-+ sources: README.mdで使用するファイルが含まれています。
-+ webserver: Webサーバー関連のファイルが含まれています。
++ compose.yml: Docker Composeの設定ファイル
++ dataanalysis: データ分析基盤の設定ファイルが含まれています
+    + digdag: データベース同期およびWebデータ同期用のスクリプトが含まれています
+    + kafka: Apache KafkaのDockerfileが含まれています
+    + spark: Apache Spark関連のファイルが含まれています
+        + Dockerfile: SparkのDockerイメージを作成するためのファイル
+        + docker-entrypoint.sh: Dockerコンテナ起動時に実行されるエントリポイントスクリプト
+        + server.properties: Sparkサーバーの設定ファイル
+        + streaming.py: ストリーミング処理を行うPythonスクリプト
++ dbserver: データベースサーバー関連のファイルが含まれています
++ sources: README.mdで使用するファイルが含まれています
++ webserver: Webサーバー関連のファイルが含まれています
 
 # Digdagの登録と起動の方法
 1. `http://localhsot:65432/`にアクセス、ダッシュボードが表示されます。
