@@ -44,6 +44,11 @@
 + Metabase: データ可視化ツール
 
 # データパイプライン
+
+<p align="center">
+  <img src="sources/data.png" alt="animated">
+</p>
+
 ## 1. バッチ処理データ
 ### データセット
 + ユーザーデータ
