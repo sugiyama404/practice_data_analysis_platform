@@ -1,4 +1,5 @@
 secret:
   ignored_paths:
     - "dataanalysis/digdag/*"
+    - "dataanalysis/spark/server.properties"
     - "compose.yaml"
